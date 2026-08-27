@@ -1,7 +1,3 @@
-# Context dependencies
-import os
-from dotenv import load_dotenv
-
 # Async dependencies
 from sqlalchemy.ext.asyncio import (
     AsyncSession, 
@@ -14,19 +10,10 @@ from sqlalchemy.orm import (
     DeclarativeBase
 )
 
-
-# Loading .env file
-load_dotenv()
-
-# Database config
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PORT = os.getenv("DB_PORT")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
+from src.core.settings import settings
 
 # Database connection URL
-DB_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DB_URL = f"postgresql+asyncpg://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}"
 
 # Session pool
 engine = create_async_engine(url=DB_URL)

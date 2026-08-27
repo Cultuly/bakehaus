@@ -2,7 +2,6 @@ from decimal import Decimal
 
 from sqlalchemy import (
     Boolean,
-    Integer,
     Numeric,
     String,
     Text,
@@ -60,7 +59,7 @@ class Product(TimeStampMixin, Base):
 
 
     # Categories relationship
-    categories: Mapped[list["ProductCategories"]] = relationship(
+    categories: Mapped[list["ProductCategory"]] = relationship(
         secondary="product_categories",
         back_populates="products",
     )

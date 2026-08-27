@@ -5,6 +5,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship,
 )
 
 from src.database.db import Base
@@ -28,4 +29,11 @@ class ProductCategory(TimeStampMixin, Base):
         ForeignKey("categories.id", ondelete="CASCADE"), 
         nullable=False,
         primary_key=True,
+    )
+
+
+    # Products relationship
+    products: Mapped[list["Product"]] = relationship(
+        secondary="product_categories",
+        back_populates="categories",
     )

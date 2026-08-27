@@ -13,7 +13,7 @@ class Settings(BaseSettings):
 
     # Database section
     db_host: str = "localhost"
-    db_name: str = "bakehause"
+    db_name: str = "bakehaus"
     db_user: str = "admin"
     db_password: str = "password"
     db_port: int = 5432
