@@ -4,6 +4,7 @@ from fastapi import FastAPI
 # Context dependencies
 from contextlib import asynccontextmanager
 
+# Models
 import src.models
 
 # Base class

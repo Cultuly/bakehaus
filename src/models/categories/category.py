@@ -7,6 +7,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship,
 )
 
 from src.database.db import Base
@@ -40,4 +41,11 @@ class Category(TimeStampMixin, Base):
         nullable=False,
         default=True,
         index=True,
+    )
+
+
+    # Products relationship
+    products: Mapped[list["Products"]] = relationship(
+        secondary="product_categories",
+        back_populates="categories"
     )

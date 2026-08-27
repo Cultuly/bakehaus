@@ -6,11 +6,14 @@ from sqlalchemy import (
     Numeric,
     String,
     Text,
+    CheckConstraint,
+    Integer,
 )
 
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship,
 )
 
 from src.database.db import Base
@@ -53,4 +56,17 @@ class Product(TimeStampMixin, Base):
         nullable=False,
         default=True,
         index=True,
+    )
+
+
+    # Categories relationship
+    categories: Mapped[list["ProductCategories"]] = relationship(
+        secondary="product_categories",
+        back_populates="products",
+    )
+
+
+    # Table constraints
+    __table_args__ = (
+        CheckConstraint("price > 0", name="ck_product_price_positive")
     )

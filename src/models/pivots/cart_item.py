@@ -31,10 +31,10 @@ class CartItem(TimeStampMixin, Base):
         index=True,
     )
     # Cart item (product) id
-    product_id: Mapped[int] = mapped_column(
+    product_id: Mapped[int | None] = mapped_column(
         Integer, 
-        ForeignKey("products.id", ondelete="RESTRICT"),
-        nullable=False,
+        ForeignKey("products.id", ondelete="SET NULL"),
+        nullable=True,
         index=True,
     )
     # Item (product) quantity

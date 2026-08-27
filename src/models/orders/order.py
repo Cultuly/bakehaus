@@ -4,9 +4,9 @@ from uuid import UUID, uuid4
 from sqlalchemy import (
     ForeignKey,
     Numeric,
-    String,
     Text,
     Uuid,
+    Enum,
 )
 
 from sqlalchemy.orm import (
@@ -19,6 +19,8 @@ from src.database.db import Base
 
 # Models
 from src.models.time_stamps import TimeStampMixin
+from src.models.orders.order_status import OrderStatus
+from src.models.orders.order_payment_status import OrderPaymentStatus
 
 
 # Orders table
@@ -49,16 +51,16 @@ class Order(TimeStampMixin, Base):
     )
     # Order status
     status: Mapped[str] = mapped_column(
-        String(32),
+        Enum(OrderStatus),
         nullable=False,
-        default="pending",
+        default=OrderStatus.PENDING,
         index=True,
     )
     # Order's payment status
     payment_status: Mapped[str] = mapped_column(
-        String(32),
+        Enum(OrderPaymentStatus),
         nullable=False,
-        default="unpaid",
+        default=OrderPaymentStatus.UNPAID,
         index=True,
     )
 

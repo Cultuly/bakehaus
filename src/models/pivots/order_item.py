@@ -8,6 +8,7 @@ from sqlalchemy import (
     Numeric,
     String,
     Uuid,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import (
     Mapped,
@@ -70,4 +71,5 @@ class OrderItem(TimeStampMixin, Base):
     # Table constraints
     __table_args__ = (
         CheckConstraint("quantity > 0", name="ck_order_items_quantity_positive"),
+        UniqueConstraint("order_id, product_id", name="uq_cart_product")
     )
