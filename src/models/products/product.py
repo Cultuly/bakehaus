@@ -59,7 +59,7 @@ class Product(TimeStampMixin, Base):
 
 
     # Categories relationship
-    categories: Mapped[list["ProductCategory"]] = relationship(
+    categories: Mapped[list["Category"]] = relationship(
         secondary="product_categories",
         back_populates="products",
     )
