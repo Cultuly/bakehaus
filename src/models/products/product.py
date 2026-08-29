@@ -67,5 +67,5 @@ class Product(TimeStampMixin, Base):
 
     # Table constraints
     __table_args__ = (
-        CheckConstraint("price > 0", name="ck_product_price_positive")
+        CheckConstraint("price > 0", name="ck_product_price_positive"),
     )

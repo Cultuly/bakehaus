@@ -71,5 +71,5 @@ class OrderItem(TimeStampMixin, Base):
     # Table constraints
     __table_args__ = (
         CheckConstraint("quantity > 0", name="ck_order_items_quantity_positive"),
-        UniqueConstraint("order_id, product_id", name="uq_order_product")
+        UniqueConstraint("order_id", "product_id", name="uq_order_product"),
     )

@@ -54,5 +54,5 @@ class CartItem(TimeStampMixin, Base):
     # Table constraints
     __table_args__ = (
         UniqueConstraint("cart_id", "product_id", name="uq_cart_product"),
-        CheckConstraint("quantity > 0", name="ck_cart_items_quantity_positive")
+        CheckConstraint("quantity > 0", name="ck_cart_items_quantity_positive"),
     )

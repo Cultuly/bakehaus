@@ -1,20 +1,24 @@
+# Context dependencies
 from decimal import Decimal
 from uuid import UUID, uuid4
+from datetime import datetime
 
+# SQL context dependencies
 from sqlalchemy import (
     ForeignKey,
     Numeric,
     Text,
     Uuid,
     Enum,
+    DateTime,
 )
-
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
     relationship,
 )
 
+# Database dependendies
 from src.database.db import Base
 
 # Models
@@ -35,7 +39,7 @@ class Order(TimeStampMixin, Base):
     )
     # Customer id
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id"), 
+        ForeignKey("users.id", ondelete="RESTRICT"), 
         nullable=False, 
         index=True
     )
@@ -63,6 +67,16 @@ class Order(TimeStampMixin, Base):
         default=OrderPaymentStatus.UNPAID,
         index=True,
     )
+    # Delivery adress
+    delivery_adress: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+    # Delivery time
+    delivery_time: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False
+    )
 
 
     # Order content (relationship with pivot table)
@@ -80,4 +94,3 @@ class Order(TimeStampMixin, Base):
             total += item.price_snapshot * item.quantity
 
         return total
-    
