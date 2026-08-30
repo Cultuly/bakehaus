@@ -52,9 +52,18 @@ class User(TimeStampMixin, Base):
     )
 
     
-    # User roles relationship through pivot table
+    # User's roles relationship throught pivot table
     roles: Mapped[list["UserRole"]] = relationship(
         back_populates="user",
         cascade="all, delete-orphan"
     )
-
+    # User's orders relationship
+    orders: Mapped[list["Order"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    # User's carts relationship
+    carts: Mapped[list["Cart"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )

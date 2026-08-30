@@ -31,9 +31,3 @@ class ProductCategory(TimeStampMixin, Base):
         primary_key=True,
     )
 
-
-    # Products relationship
-    products: Mapped[list["Product"]] = relationship(
-        secondary="product_categories",
-        back_populates="categories",
-    )

@@ -48,6 +48,10 @@ class Cart(TimeStampMixin, Base):
         back_populates="cart",
         cascade="all, delete-orphan"
     )
+    # Cart's owner (user) relationship
+    user: Mapped["User"] = relationship(
+        back_populates="carts",
+    )
 
 
     # Cart's total price

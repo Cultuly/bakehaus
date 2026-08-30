@@ -44,7 +44,7 @@ class Order(TimeStampMixin, Base):
         index=True
     )
     # Order commetary (from customer)
-    comment: Mapped[str | None] = mapped_column(
+    commentary: Mapped[str | None] = mapped_column(
         Text, 
         nullable=True
     )
@@ -68,7 +68,7 @@ class Order(TimeStampMixin, Base):
         index=True,
     )
     # Delivery adress
-    delivery_adress: Mapped[str] = mapped_column(
+    delivery_address: Mapped[str] = mapped_column(
         Text,
         nullable=False,
     )
@@ -83,6 +83,10 @@ class Order(TimeStampMixin, Base):
     items: Mapped[list["OrderItem"]] = relationship(
         back_populates="order",
         cascade="all, delete-orphan",
+    )
+    # User relationship
+    user: Mapped["User"] = relationship(
+        back_populates="orders",
     )
 
 
