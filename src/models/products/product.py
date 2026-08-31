@@ -63,7 +63,7 @@ class Product(TimeStampMixin, Base):
         secondary="product_categories",
         back_populates="products",
     )
-
+    
 
     # Table constraints
     __table_args__ = (

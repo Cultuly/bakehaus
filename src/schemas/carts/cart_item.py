@@ -2,6 +2,7 @@
 from pydantic import (
     BaseModel, 
     ConfigDict,
+    Field,
 )
 # Time context dependencies
 from datetime import datetime
@@ -9,8 +10,8 @@ from datetime import datetime
 
 # Cart item update schema (PUT/PATCH)(soon)
 class CartItemUpdate(BaseModel):
-    product_id: int | None
-    quantity: int | None
+    product_id: int | None = None
+    quantity: int | None = None
 
 # Cart item response schema (GET)
 class CartItemResponse(BaseModel):

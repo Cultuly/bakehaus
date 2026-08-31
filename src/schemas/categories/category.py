@@ -12,16 +12,16 @@ from datetime import datetime
 
 # Category creation schema (POST)
 class CategoryCreate(BaseModel):
-    name: str = Field(min_length=1, max_length=64)
+    name: str = Field(default=None, min_length=1, max_length=64)
     #parent_id: int | None
     is_active: bool = True
 
 
 # Category update schema (PUT/PATCH)
 class CategoryUpdate(BaseModel):
-    name: int | None
-    #parent_id: int | None
-    is_active: bool | None
+    name: str | None = Field(default=None, min_length=1, max_length=64)
+    #parent_id: int | None = Field(default=None)
+    is_active: bool | None = None
 
 # Category response schema (GET)
 class CategoryResponse(BaseModel):

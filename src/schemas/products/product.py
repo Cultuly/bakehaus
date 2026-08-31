@@ -8,26 +8,28 @@ from pydantic import (
 from decimal import Decimal
 # Time context dependencies
 from datetime import datetime
+#
+from src.schemas.categories.category import CategoryResponse
 
 
 # Product creation schema (POST)
 class ProductCreate(BaseModel):
-    name: str = Field(min_length=1, max_length=32)
+    name: str = Field(min_length=1, max_length=128)
     price: Decimal = Field(gt=0, decimal_places=2)
-    descriprion: str = Field(None, min_length=1, max_length=1000)
+    description: str | None = Field(default=None, min_length=1, max_length=1000)
     #slug: str = Field(None, min_length=1, max_length=255)
     is_active: bool = True
-    category_ids: list[int] = Field(default_factory=list)
+    categories: list[CategoryResponse] = Field(default_factory=list)
 
 
 # Product update schema (PUT/PATCH)
 class ProductUpdate(BaseModel):
-    name: str | None = Field(min_length=1, max_length=32)
-    price: Decimal | None = Field(gt=0, decimal_places=2)
-    descriprion: str | None = Field(None, min_length=1, max_length=1000)
-    #slug: str | None = Field(None, min_length=1, max_length=255)
-    is_active: bool | None
-    category_ids: list[int] | None = Field(default_factory=list)
+    name: str | None = Field(default=None, min_length=1, max_length=32)
+    price: Decimal | None = Field(default=None, gt=0, decimal_places=2)
+    description: str | None = Field(default=None, min_length=1, max_length=1000)
+    #slug: str | None = Field(default=None, min_length=1, max_length=255)
+    categories: list[int] | None = Field(default=None, default_factory=list)
+    is_active: bool | None = None
 
 
 # Product response schema (GET)
@@ -37,9 +39,9 @@ class ProductResponse(BaseModel):
     id: int
     name: str
     price: Decimal
-    descriprion: str
+    description: str | None
     #slug: str
     is_active: bool
-    category_ids: list[int]
+    categories: list[CategoryResponse]
     created_at: datetime
     updated_at: datetime | None

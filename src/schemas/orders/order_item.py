@@ -2,7 +2,7 @@
 from pydantic import (
     BaseModel, 
     ConfigDict,
-    Field,
+    model_validator,
 )
 # Price type context dependencies
 from decimal import Decimal
@@ -13,11 +13,14 @@ from datetime import datetime
 # Order item update schema (PUT/PATCH)
 class OrderItemUpdate(BaseModel):
     product_id: int | None
+    quantity: int | None
 
-    # Change quantity only if product id is given
-    if product_id is not None:
-        quantity: int | None
-
+    # Quantity check
+    @model_validator(mode='after')
+    def check_quantity(self) -> "OrderItemUpdate":
+        if self.product_id is not None and self.quantity is None:
+            raise ValueError("Quantity is required when product is providing")
+        return self
 
 # Order item response schema (GET)
 class OrderItemResponse(BaseModel):
