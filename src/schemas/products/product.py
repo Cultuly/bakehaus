@@ -24,11 +24,11 @@ class ProductCreate(BaseModel):
 
 # Product update schema (PUT/PATCH)
 class ProductUpdate(BaseModel):
-    name: str | None = Field(default=None, min_length=1, max_length=32)
+    name: str | None = Field(default=None, min_length=1, max_length=128)
     price: Decimal | None = Field(default=None, gt=0, decimal_places=2)
     description: str | None = Field(default=None, min_length=1, max_length=1000)
     #slug: str | None = Field(default=None, min_length=1, max_length=255)
-    categories: list[int] | None = Field(default=None, default_factory=list)
+    categories: list[int] | None = Field(default_factory=list)
     is_active: bool | None = None
 
 

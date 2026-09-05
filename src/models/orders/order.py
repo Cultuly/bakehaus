@@ -25,6 +25,7 @@ from src.database.db import Base
 from src.models.time_stamps import TimeStampMixin
 from src.models.orders.order_status import OrderStatus
 from src.models.orders.order_payment_status import OrderPaymentStatus
+from src.models.orders.delivery_type import DeliveryType
 
 
 # Orders table
@@ -67,15 +68,22 @@ class Order(TimeStampMixin, Base):
         default=OrderPaymentStatus.UNPAID,
         index=True,
     )
+    # Delivery type
+    delivery_type: Mapped[str] = mapped_column(
+        Enum(DeliveryType),
+        nullable=False,
+        default=DeliveryType.PICKUP,
+        index=True
+    )
     # Delivery adress
     delivery_address: Mapped[str] = mapped_column(
         Text,
-        nullable=False,
+        nullable=True,
     )
     # Delivery time
     delivery_time: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        nullable=False
+        nullable=True
     )
 
 

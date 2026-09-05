@@ -2,7 +2,7 @@
 from pydantic import (
     BaseModel, 
     ConfigDict,
-    computed_field,
+    UUID4,
 )
 # Price type context dependencies
 from decimal import Decimal
@@ -27,6 +27,7 @@ class CartCreate(BaseModel):
 class CartResponse(BaseModel):
     model_config=ConfigDict(from_attributes=True)
 
+    id: UUID4
     user: UserResponse
     items: list[CartItemResponse]
     total_price: Decimal

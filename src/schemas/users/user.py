@@ -14,7 +14,7 @@ class UserCreate(BaseModel):
     username: str = Field(min_length=1, max_length=32)
     email: EmailStr = Field(min_length=1, max_length=255)
     # password: str = Field(min_length=8, max_length=50)
-    phone: str | None = Field(min_length=11, max_length=20)
+    phone: str | None = Field(default=None, min_length=11, max_length=20)
     is_active: bool = True
 
 
@@ -34,7 +34,7 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: EmailStr
-    phone: str
+    phone: str | None
     is_active: bool
     created_at: datetime
     updated_at: datetime | None
