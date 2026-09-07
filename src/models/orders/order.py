@@ -98,9 +98,9 @@ class Order(TimeStampMixin, Base):
     )
 
 
-    # Calculates order's total price and update total_price field
+    # Calculates order's total price and rewrite total_price field
     def update_total_price(self) -> Decimal:
         self.total_price = sum(
-            self.item.price_snapshot * item.quantity
+            item.price_snapshot * item.quantity
             for item in self.items
-            )
+        )

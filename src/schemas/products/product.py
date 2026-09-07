@@ -8,7 +8,7 @@ from pydantic import (
 from decimal import Decimal
 # Time context dependencies
 from datetime import datetime
-#
+# Categories
 from src.schemas.categories.category import CategoryResponse
 
 
@@ -42,6 +42,6 @@ class ProductResponse(BaseModel):
     description: str | None
     #slug: str
     is_active: bool
-    categories: list[int]
+    categories: list[CategoryResponse]
     created_at: datetime
     updated_at: datetime | None
