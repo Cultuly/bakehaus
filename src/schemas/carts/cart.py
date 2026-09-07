@@ -28,7 +28,7 @@ class CartResponse(BaseModel):
     model_config=ConfigDict(from_attributes=True)
 
     id: UUID4
-    user: UserResponse
+    user_id: int 
     items: list[CartItemResponse]
     total_price: Decimal
     created_at: datetime

@@ -98,11 +98,9 @@ class Order(TimeStampMixin, Base):
     )
 
 
-    # Calculates order's total price
-    @property
-    def calculated_total(self) -> Decimal:
-        total = Decimal("0")
-        for item in self.items:
-            total += item.price_snapshot * item.quantity
-
-        return total
+    # Calculates order's total price and update total_price field
+    def update_total_price(self) -> Decimal:
+        self.total_price = sum(
+            self.item.price_snapshot * item.quantity
+            for item in self.items
+            )

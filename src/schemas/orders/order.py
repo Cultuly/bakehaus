@@ -5,16 +5,24 @@ from pydantic import (
     Field,
     UUID4,
     model_validator,
+    field_validator,
 )
 # Price type context dependencies
 from decimal import Decimal
 # Time context dependencies
-from datetime import datetime
+from datetime import (
+    datetime, 
+    timezone
+)
 # Order statuses
 from src.models.orders.order_status import OrderStatus
 from src.models.orders.order_payment_status import OrderPaymentStatus
 # Order items
-from src.schemas.orders.order_item import OrderItemResponse, OrderItemCreate, OrderItemUpdate
+from src.schemas.orders.order_item import (
+    OrderItemResponse, 
+    OrderItemCreate, 
+    OrderItemUpdate
+)
 from src.schemas.users.user import UserResponse
 from src.models.orders.delivery_type import DeliveryType
 
@@ -30,6 +38,9 @@ class OrderCreate(BaseModel):
     # Delivery fields validator
     @model_validator(mode='after')
     def validate_delivery_fields(self):
+        """
+            Checking if delivery_time and delivery_adress field was given if delivery type is DELIVERY
+        """
         if self.delivery_type == DeliveryType.DELIVERY:
             if self.delivery_address is None:
                 raise ValueError("Delivery address is required for delivery")
@@ -38,6 +49,22 @@ class OrderCreate(BaseModel):
 
         return self
 
+    @field_validator('delivery_time')
+    @classmethod
+    def validate_delivery_time(cls, time: datetime | None) -> datetime | None:
+        """
+            Checking if delivery_time is in the future
+        """
+        # If delivery type is pickup
+        if time is None:
+            return None
+
+        # If delivery time in the past raises exception
+        now = datetime.now(timezone.utc)
+        if time <= now:
+            raise ValueError('Delivery time must be in the future!')
+
+        return time
 
 # Order update schema (PUT/PATCH) (in progress)
 class OrderUpdate(BaseModel):

@@ -19,7 +19,7 @@ class ProductCreate(BaseModel):
     description: str | None = Field(default=None, min_length=1, max_length=1000)
     #slug: str = Field(None, min_length=1, max_length=255)
     is_active: bool = True
-    categories: list[CategoryResponse] = Field(default_factory=list)
+    categories: list[int] = Field(default_factory=list)
 
 
 # Product update schema (PUT/PATCH)
@@ -42,6 +42,6 @@ class ProductResponse(BaseModel):
     description: str | None
     #slug: str
     is_active: bool
-    categories: list[CategoryResponse]
+    categories: list[int]
     created_at: datetime
     updated_at: datetime | None

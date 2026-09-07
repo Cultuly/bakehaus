@@ -8,9 +8,13 @@ from pydantic import (
 from datetime import datetime
 
 
+# Cart item create schema (POST)
+class CartItemCreate(BaseModel):
+    product_id: int
+    quantity: int = Field(gt=0)
+
 # Cart item update schema (PUT/PATCH)(soon)
 class CartItemUpdate(BaseModel):
-    product_id: int | None = None
     quantity: int | None = Field(default=None, gt=0)
 
 # Cart item response schema (GET)
