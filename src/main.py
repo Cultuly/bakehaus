@@ -1,14 +1,13 @@
 # FastAPI dependencies
 from fastapi import FastAPI
-
 # Context dependencies
 from contextlib import asynccontextmanager
-
 # Models
 import src.models
-
 # Base class
 from src.database.db import Base, engine
+# User router
+from src.api.v1.users.users import router as user_router
 
 
 # Lifespan
@@ -22,6 +21,9 @@ async def lifespan(app: FastAPI):
 
 # App init
 app = FastAPI(lifespan=lifespan)
+
+# User router register
+app.include_router(user_router)
 
 
 # App's healthcheck
