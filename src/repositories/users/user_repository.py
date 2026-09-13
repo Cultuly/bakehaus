@@ -14,14 +14,14 @@ from src.schemas.users.user import UserCreate
 # User repository class (access to users data in database)
 class UserRepository:
     # Database session getter
-    def __init__(self):
-        pass
+    def __init__(self, db: AsyncSession):
+        self.db = db
 
     # Return user by ID
-    async def get_by_id(self, db: AsyncSession, id: int) -> models.User:
+    async def get_by_id(self, id: int) -> models.User | None:
         # SQL querry
         querry = select(models.User).where(models.User.id == id)
-        result = await db.execute(querry)
+        result = await self.db.execute(querry)
 
         # User object
         user = result.scalars().first()
@@ -29,10 +29,10 @@ class UserRepository:
         return user
 
     # Get concrete user by his email
-    async def get_by_email(self, db: AsyncSession, email: str) -> models.User:
+    async def get_by_email(self, email: str) -> models.User | None:
         # SQL querry
         querry = select(models.User).where(models.User.email == email)
-        result = await db.execute(querry)
+        result = await self.db.execute(querry)
 
         # User object
         user = result.scalars().first()
@@ -40,10 +40,10 @@ class UserRepository:
         return user
 
     # Get concrete user by his username
-    async def get_by_username(self, db: AsyncSession, username: str) -> models.User:
+    async def get_by_username(self, username: str) -> models.User | None:
         # SQL querry
         querry = select(models.User).where(models.User.username == username)
-        result = await db.execute(querry)
+        result = await self.db.execute(querry)
 
         # User object
         user = result.scalars().first()
@@ -51,10 +51,10 @@ class UserRepository:
         return user
 
     # Returns all users
-    async def get_all(self, db: AsyncSession) -> list[models.User]:
+    async def get_all(self) -> list[models.User]:
         # SQL querry
         querry = select(models.User)
-        result = await db.execute(querry)
+        result = await self.db.execute(querry)
 
         # Users objects
         users = result.scalars().all()
@@ -62,7 +62,7 @@ class UserRepository:
         return users
 
     # Add user to database
-    async def add(self, db: AsyncSession, user: UserCreate) -> None:
+    async def add(self, user: UserCreate) -> None:
         # New user creation
         new_user = models.User(
             username = user.username,
