@@ -71,3 +71,5 @@ class UserRepository:
         )
 
         self.db.add(new_user)
+
+        return new_user

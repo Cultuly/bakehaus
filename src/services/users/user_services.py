@@ -58,3 +58,5 @@ class UserService:
         # Session commit and refresh new user instance
         await self.db.commit()
         await self.db.refresh(new_user)
+
+        return new_user

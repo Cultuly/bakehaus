@@ -23,7 +23,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 # User router register
-app.include_router(user_router)
+app.include_router(user_router, tags=['Users'])
 
 
 # App's healthcheck

@@ -4,19 +4,20 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine, 
     async_sessionmaker,
 )
-
 # Base
 from sqlalchemy.orm import (
     DeclarativeBase
 )
-
 from src.core.settings import settings
+
 
 # Database connection URL
 DB_URL = f"postgresql+asyncpg://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}"
 
 # Session pool
-engine = create_async_engine(url=DB_URL)
+engine = create_async_engine(url=DB_URL, 
+                             pool_pre_ping=True,
+                             echo=True)
 
 # Sessionmaker
 AsyncSessionLocal = async_sessionmaker(bind=engine, class_=AsyncSession ,expire_on_commit=False)
