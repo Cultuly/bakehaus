@@ -14,7 +14,7 @@ from src.schemas.users.user import UserCreate
 class UserService:
     def __init__(self, db: AsyncSession, user_repo: UserRepository):
             self.db = db
-            self.user_repo = user_repo(db)
+            self.user_repo = user_repo
 
     # Returns one concrete user
     async def get_user(self, id: int):

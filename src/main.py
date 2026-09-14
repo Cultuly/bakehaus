@@ -7,7 +7,7 @@ import src.models
 # Base class
 from src.database.db import Base, engine
 # User router
-from api.v1.users.user_router import router as user_router
+from src.api.v1.users.user_router import router as user_router
 
 
 # Lifespan

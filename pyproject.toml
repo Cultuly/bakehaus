@@ -20,4 +20,4 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = "src"
-module-name = ["api", "core", "database"]
+module-name = ["api", "core", "database", "repositories", "schemas", "models", "services"]

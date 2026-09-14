@@ -8,7 +8,9 @@ from src.repositories.users.user_repository import UserRepository
 
 
 # User services factory
-def get_user_service(db: Annotated[AsyncSession, Depends(get_db)], 
-                     user_repo: type[UserRepository] = UserRepository) -> UserService:
+def get_user_service(db: Annotated[AsyncSession, Depends(get_db)]) -> UserService:
+    # User repository instance creation
+    user_repo = UserRepository(db=db)
+
     # Returns UserService instance
     return UserService(db=db, user_repo=user_repo)

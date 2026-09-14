@@ -62,7 +62,7 @@ class UserRepository:
         return users
 
     # Add user to database
-    async def add(self, user: UserCreate) -> None:
+    async def add(self, user: UserCreate) -> models.User:
         # New user creation
         new_user = models.User(
             username = user.username,
