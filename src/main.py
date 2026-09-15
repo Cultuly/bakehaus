@@ -8,6 +8,7 @@ import src.models
 from src.database.db import Base, engine
 # User router
 from src.api.v1.users.user_router import router as user_router
+from src.api.v1.categories.categories_router import router as categories_router
 
 
 # Lifespan
@@ -22,9 +23,9 @@ async def lifespan(app: FastAPI):
 # App init
 app = FastAPI(lifespan=lifespan)
 
-# User router register
+# Routers registry
 app.include_router(user_router, tags=['Users'])
-
+app.include_router(categories_router, tags=['Categories'])
 
 # App's healthcheck
 @app.get("/", include_in_schema=False)

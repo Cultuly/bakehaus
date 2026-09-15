@@ -18,7 +18,7 @@ def get_user_service(db: Annotated[AsyncSession, Depends(get_db)]) -> UserServic
     return UserService(db=db, user_repo=user_repo)
 
 # Category services factory
-def get_category_service(db: Annotated[AsyncSession, Depends(get_db)]) -> CategoryRepository:
+def get_category_service(db: Annotated[AsyncSession, Depends(get_db)]) -> CategoryService:
     # Category repository instance creation
     category_repo = CategoryRepository(db=db)
 

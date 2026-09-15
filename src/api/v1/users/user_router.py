@@ -1,5 +1,5 @@
 # Fastapi dependencies
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 # Users service
 from src.services.users.user_services import UserService
 from src.schemas.users.user import UserCreate, UserResponse
@@ -13,19 +13,25 @@ from src.core.factories import get_user_service
 router = APIRouter()
 
 # Returns concrete user by his ID
-@router.get('/users/{user_id}', response_model=UserResponse)
+@router.get('/users/{user_id}', 
+            response_model=UserResponse, 
+            status_code=status.HTTP_200_OK)
 async def get_user(user_id: int,
                    service: Annotated[UserService, Depends(get_user_service)]) -> UserResponse:
     return await service.get_user(user_id)
 
 # Returns all users
-@router.get('/users', response_model=list[UserResponse])
+@router.get('/users', 
+            response_model=list[UserResponse], 
+            status_code=status.HTTP_200_OK)
 async def get_users(service: Annotated[UserService, Depends(get_user_service)]) -> list[UserResponse] | list:
     # Returns list of users instances
     return await service.get_all_users()
 
 # Creates new user
-@router.post('/users', response_model=UserResponse)
+@router.post('/users', 
+             response_model=UserResponse, 
+             status_code=status.HTTP_201_CREATED)
 async def create_user(user_data: UserCreate,
                       service: Annotated[UserService, Depends(get_user_service)]) -> UserResponse:
     new_user = await service.create_user(user_data)

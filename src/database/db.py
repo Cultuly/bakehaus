@@ -17,7 +17,7 @@ DB_URL = f"postgresql+asyncpg://{settings.db_user}:{settings.db_password}@{setti
 # Session pool
 engine = create_async_engine(url=DB_URL, 
                              pool_pre_ping=True,
-                             echo=True)
+                             echo=False)
 
 # Sessionmaker
 AsyncSessionLocal = async_sessionmaker(bind=engine, class_=AsyncSession ,expire_on_commit=False)
