@@ -20,7 +20,7 @@ async def get_user(user_id: int,
 
 # Returns all users
 @router.get('/users', response_model=list[UserResponse])
-async def get_users(service: Annotated[UserService, Depends(get_user_service)]) -> list[UserResponse]:
+async def get_users(service: Annotated[UserService, Depends(get_user_service)]) -> list[UserResponse] | list:
     # Returns list of users instances
     return await service.get_all_users()
 

@@ -1,23 +1,25 @@
-# User's user_repository
-from src.repositories.users.user_repository import UserRepository
+# Exceptions dependencies
 from fastapi import (
     status, 
     HTTPException
 )
-
+# SQL dependencies
+from src.repositories.users.user_repository import UserRepository
 from sqlalchemy.ext.asyncio import AsyncSession
-
+# Schemas
 from src.schemas.users.user import UserCreate
+# Models
+from src.models.users import user as models
 
 
 # User's services
 class UserService:
     def __init__(self, db: AsyncSession, user_repo: UserRepository):
-            self.db = db
-            self.user_repo = user_repo
+        self.db = db
+        self.user_repo = user_repo
 
     # Returns one concrete user
-    async def get_user(self, id: int):
+    async def get_user(self, id: int) -> models.User:
         user = await self.user_repo.get_by_id(id=id)
 
         # Check if user with given ID exists
@@ -29,7 +31,7 @@ class UserService:
         return user
 
     # Returns all users
-    async def get_all_users(self):
+    async def get_all_users(self) -> list[models.User] | list:
         users = await self.user_repo.get_all()
 
         # Return empty list if users not found
@@ -38,7 +40,7 @@ class UserService:
         return users
 
     # Add user handle
-    async def create_user(self, user_data: UserCreate):
+    async def create_user(self, user_data: UserCreate) -> models.User:
         # Check if this email already taken
         if await self.user_repo.get_by_email(email=user_data.email) is not None:
             raise HTTPException(
